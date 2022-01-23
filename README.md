@@ -9,26 +9,13 @@ WIP
 - krakaboom.js, initialize hack on all servers, uses penhack and the attack program
 - hacknet.js, auto buy nodes
 - infosec.js, see info about servers
-- servers.js, auto buy servers
+- purchase-server.js, auto buy servers
+- factions.js, backdoor known servers
 
 ### Usage
 
-Copy and paste the scripts into the game
-
-```
-[home ~/]> nano fib.js
-[home ~/]> nano penhack.js
-[home ~/]> nano infosec.js
-[home ~/]> nano krakaboom.js
-```
-
-Initialize hack
-
-```
-[home ~/]> run krakaboom.js
-```
-
-Or using alias
+- Copy and paste the scripts into the game
+- Initialize hack with alias
 
 ```
 [home ~/]> krakaboom
@@ -38,9 +25,16 @@ Or using alias
 
 ```
 alias nodes="kill hacknet.js; run hacknet.js"
-alias bs="kill servers.js; run servers.js"
+alias bs="kill purchase-server.js; run purchase-server.js"
 alias krakaboom="run krakaboom.js"
 alias info="run infosec.js"
-alias hop="run hop.js"
+alias hop="run util/hop.js"
 alias lb="buy -l"
 ```
+
+### TODO
+
+- copy this repository script
+- purchase-server.js - automate server purchase and deletion
+- hacknet.js - purchase cheapest upgrade first
+- run all scripts with one command

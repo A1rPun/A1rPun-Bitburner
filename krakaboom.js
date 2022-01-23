@@ -1,15 +1,13 @@
 import { penhack } from 'penhack.js';
-import { infoSec } from './infosec.js';
+import { getServers } from './util/servers.js';
 
 const attackScript = 'fib.js';
 
-export async function main(ns) {
-	const servers = await infoSec(ns);
+export async function krakaboom(ns) {
+	const servers = getServers(ns);
 
 	for (const server of servers) {
 		if (server.name === 'home') continue;
-
-		ns.killall(server.name);
 
 		if (!ns.fileExists(attackScript, server.name)) await ns.scp(attackScript, server.name);
 
@@ -20,14 +18,22 @@ export async function main(ns) {
 }
 
 export async function attack(ns, server) {
-	const ramAvailable = server.maxRam - server.usedRam;
+	const ramAvailable = server.maxRam - ns.getServerUsedRam(server.name);
 	const ramPerThread = ns.getScriptRam(attackScript);
 	const threads = Math.floor(ramAvailable / ramPerThread);
 
-	if (threads) {
-		await ns.exec(attackScript, server.name, threads, server.name);
-		ns.tprint(`Attack ${server.name} in progress`);
-	} else {
-		ns.tprint(`No RAM available on ${server.name}. Has ${ramAvailable}, need ${ramPerThread}`);
+	if (!threads) return;
+
+	await ns.exec(attackScript, server.name, threads, server.name);
+	ns.print(`Attack ${server.name} in progress`);
+}
+
+export async function main(ns) {
+	ns.disableLog('ALL');
+	ns.print('Invoke krakaboom');
+
+	while (true) {
+		await krakaboom(ns);
+		await ns.sleep(60_000);
 	}
 }

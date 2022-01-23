@@ -12,7 +12,7 @@ export async function penhack(ns, server) {
 	const currentLevel = ns.getHackingLevel();
 
 	if (requiredPorts <= openPorts && requiredLevel <= currentLevel && ns.nuke(server)) {
-		ns.tprint(`NUKED ${server}`);
+		ns.print(`NUKED ${server}`);
 	}
 }
 

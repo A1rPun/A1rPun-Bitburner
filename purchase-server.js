@@ -13,7 +13,7 @@ export async function main(ns) {
 	const cost = ns.getPurchasedServerCost(maxRam);
 
 	for (let i = 0; i < amountOfServers; i++) {
-		if (!canBuy(cost)) break;
+		if (!canBuy(ns, cost)) break;
 		
 		const serverName = `${serverNamePrefix}-${i}`;
 		ns.purchaseServer(serverName, maxRam);
